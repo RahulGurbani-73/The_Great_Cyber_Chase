@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Great Cyber Chase | Organiser Dashboard</title>
+  <link rel="stylesheet" href="hunt.css">
+</head>
+<body data-page="organizer">
+  <section id="organizer-auth-gate" class="portal-card" style="max-width:440px;margin:10vh auto;display:none">
+    <div class="eyebrow">THE GREAT CYBER CHASE / ORGANISER SIGN-IN</div><h2>Organiser access</h2>
+    <p>Sign in with the organiser account authorized in Supabase.</p>
+    <form id="organizer-login-form"><div class="field"><label>EMAIL</label><input id="organizer-email" type="email" required autocomplete="username"></div>
+      <div class="field"><label>PASSWORD</label><input id="organizer-password" type="password" required autocomplete="current-password"></div>
+      <div id="organizer-login-error" class="device-note portal-hidden"></div><button class="btn btn-primary" type="submit">Sign in to control room</button>
+    </form>
+  </section>
+  <div class="shell" style="display:none">
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark">N</span><span><b>THE GREAT CYBER CHASE</b><small>NFSU JAIPUR · ORGANISER</small></span></a>
+      <div class="nav-label">CONTROL ROOM</div>
+      <button class="nav active" data-view="overview"><span>◈</span> Overview</button>
+      <button class="nav" data-view="teams"><span>◎</span> Teams <em id="nav-team-count">0/10</em></button>
+      <button class="nav" data-view="tracks"><span>⌁</span> Track monitor</button>
+      <button class="nav" data-view="ledger"><span>▤</span> Score ledger</button>
+      <div class="sidebar-bottom"><div class="live-dot"></div><span>EVENT SYSTEM</span><b id="side-event-state">STANDBY</b><a href="team.html" class="team-link">Open team portal ↗</a></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><div class="eyebrow">THE GREAT CYBER CHASE · NFSU JAIPUR CAMPUS</div><h1 id="page-title">Event overview</h1></div><div class="top-actions"><span class="event-pill"><i id="event-dot"></i><span id="event-label">SETUP</span></span><button id="organizer-logout" class="btn btn-quiet">Sign out</button><button id="event-restart" class="btn btn-quiet">Restart event</button><button id="event-action" class="btn btn-primary">Start event</button></div></header>
+
+      <section class="view active" id="view-overview">
+        <div class="device-note" style="margin-bottom:16px"><strong>Supabase shared mode.</strong> Team records and score updates are loaded from the event database.</div>
+        <div class="hero-row"><div class="chase-hero-panel"><div class="chase-title"><div class="eyebrow">NFSU JAIPUR · CAMPUS TREASURE HUNT</div><h2>THE GREAT<br><span>CYBER CHASE</span></h2><p>Organiser control room · team progress and event scoring</p></div><div class="chase-map" aria-hidden="true"><svg viewBox="0 0 150 100" role="presentation"><path d="M7 20 43 9l21 13 34-13 43 13v58l-36 10-27-12-37 13L7 79z" fill="#17243a" stroke="#77b7ff" stroke-width="2.5"/><path d="m43 9 1 29 20 12-1-28m35-13 1 28-22 21 0 22m-37-42 34-9 25 8 27-14M7 48l36-10m0 0 1 29 36 11m-36-11 37-17" fill="none" stroke="#435a78" stroke-width="1.5"/><path d="M20 66c16-26 28-18 39-5s17 12 27-6 18-20 31-4" fill="none" stroke="#f2b84b" stroke-width="3" stroke-dasharray="5 5" stroke-linecap="round"/><circle cx="20" cy="66" r="5" fill="#28d7e5" stroke="#07101c" stroke-width="2"/><path d="M118 43c-7 0-12 5-12 12 0 9 12 20 12 20s12-11 12-20c0-7-5-12-12-12zm0 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="#fb6975" stroke="#07101c" stroke-width="2"/></svg><span>FIELD ROUTE / 03 TRACKS</span></div></div></div>
+        <div class="stat-grid">
+          <article class="stat-card"><span>REGISTERED TEAMS</span><b id="stat-registered">0 <small>/ 10</small></b><i class="stat-icon cyan">◎</i></article>
+          <article class="stat-card"><span>ACTIVE TEAMS</span><b id="stat-active">0</b><i class="stat-icon green">↗</i></article>
+          <article class="stat-card"><span>FINISHED</span><b id="stat-finished">0</b><i class="stat-icon amber">✓</i></article>
+          <article class="stat-card"><span>AVERAGE SCORE</span><b id="stat-average">0</b><i class="stat-icon blue">▤</i></article>
+        </div>
+        <div class="content-grid"><section class="panel team-panel"><div class="panel-head"><div><h3>Team progress</h3><p>Live status across all 10 team slots</p></div><button class="text-btn" data-goto="teams">View all teams →</button></div><div class="table-wrap"><table><thead><tr><th>TEAM</th><th>TRACK</th><th>CURRENT LEVEL</th><th>PROGRESS</th><th>SCORE</th><th>STATUS</th><th></th></tr></thead><tbody id="overview-team-rows"></tbody></table></div><div class="empty-state" id="overview-empty"><div class="empty-mark">◎</div><b>Teams will appear here after registration</b><span>Teams register and choose one locked track from the team portal.</span><a class="btn btn-quiet" href="team.html">Open registration portal ↗</a></div></section>
+          <section class="panel track-panel"><div class="panel-head"><div><h3>Track activity</h3><p>Teams currently assigned to each track</p></div><span class="tiny-tag">3 TRACKS</span></div><div id="track-cards" class="track-cards"></div><div class="finale-note"><span class="finale-icon">✦</span><div><b>Level 7 · Finale</b><small>Final level within each selected track</small></div><span class="status-chip locked">TRACK LOCKED</span></div></section></div>
+        <section class="panel activity-panel"><div class="panel-head"><div><h3>Recent activity</h3><p>Registration, progress, and score events</p></div><button class="text-btn" data-goto="ledger">Open score ledger →</button></div><div class="activity-list" id="activity-list"></div><div class="empty-inline" id="activity-empty">No event activity yet.</div></section>
+      </section>
+
+      <section class="view" id="view-teams"><div class="section-intro"><div><div class="eyebrow">ROSTER / 10 TEAM CAPACITY</div><h2>Teams & registration</h2><p>Each team has up to four players, one selected track, and one device session.</p></div><a class="btn btn-quiet" href="team.html">Team registration ↗</a></div><div class="filter-row"><label class="search"><span>⌕</span><input id="team-search" placeholder="Search team or member"></label><select id="team-filter"><option value="all">All statuses</option><option value="registered">Registered</option><option value="active">Active</option><option value="paused">Paused</option><option value="finished">Finished</option></select><select id="track-filter"><option value="all">All tracks</option><option value="1">T1 · Physical Evidence</option><option value="2">T2 · Campus Cordon</option><option value="3">T3 · Digital Forensics</option></select></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>TEAM & MEMBERS</th><th>TRACK</th><th>LEVEL</th><th>PROGRESS</th><th>SCORE</th><th>HINTS</th><th>LAST ACTIVITY</th><th>STATUS</th><th></th></tr></thead><tbody id="team-rows"></tbody></table></div><div class="empty-state compact" id="teams-empty"><div class="empty-mark">◎</div><b>No teams match this view</b><span>Team registrations will show here.</span></div></section></section>
+
+      <section class="view" id="view-tracks"><div class="section-intro"><div><div class="eyebrow">FIELD MONITOR / 21 CLUES</div><h2>Track monitor</h2><p>See team distribution and level completion across the three tracks.</p></div><span class="tiny-tag">7 LEVELS PER TRACK</span></div><div id="track-monitor" class="monitor-grid"></div></section>
+
+      <section class="view" id="view-ledger"><div class="section-intro"><div><div class="eyebrow">AUDIT TRAIL / AUTOMATIC SCORE CALCULATION</div><h2>Score ledger</h2><p>Every award and deduction is recorded with its reason and timestamp.</p></div><button class="btn btn-quiet" id="export-csv">Export CSV ↓</button></div><div class="ledger-summary" id="ledger-summary"></div><section class="panel"><div class="panel-head"><div><h3>Event log</h3><p>Level completions and hint deductions</p></div><select id="ledger-filter"><option value="all">All teams</option></select></div><div id="ledger-list" class="ledger-list"></div><div class="empty-inline" id="ledger-empty">No score events recorded.</div></section></section>
+
+      <footer class="footer"><span>THE GREAT CYBER CHASE · NFSU JAIPUR</span><span>Organiser control room · <a class="text-btn" href="clue-directory.html">Clue directory</a></span></footer>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="team-modal"><section class="modal"><header><div><div class="eyebrow">TEAM CONTROL / ORGANISER ACTION</div><h2 id="modal-title">Team details</h2></div><button class="icon-btn" id="modal-close" aria-label="Close">×</button></header><div id="modal-content"></div></section></div>
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js"></script><script src="hunt.js"></script>
+</body></html>

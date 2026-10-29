@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Great Cyber Chase | Team Portal</title>
+  <link rel="stylesheet" href="hunt.css">
+</head>
+<body data-page="team">
+  <main class="portal-wrap">
+    <header class="portal-header">
+      <a class="brand" href="team.html">
+        <span class="brand-mark">N</span>
+        <span><b>THE GREAT CYBER CHASE</b><small>NFSU JAIPUR · CAMPUS TREASURE HUNT</small></span>
+      </a>
+      <span class="tiny-tag">TEAM PORTAL</span>
+    </header>
+
+    <div id="team-auth" class="portal-grid">
+      <section class="portal-card" id="register-card">
+        <div class="eyebrow">TEAM REGISTRATION</div>
+        <h2>Register your team</h2>
+        <p>Enter your team details and choose one track. Your track is locked after registration.</p>
+        <form id="registration-form">
+          <div class="field">
+            <label for="reg-team-name">TEAM NAME</label>
+            <input id="reg-team-name" required maxlength="32" placeholder="e.g. Evidence Unit 01">
+          </div>
+          <div class="field">
+            <label for="reg-track">CHOOSE A TRACK</label>
+            <select id="reg-track" required>
+              <option value="">Choose a track</option>
+              <option value="1">T1 · Core Physical Evidence</option>
+              <option value="2">T2 · Spatial & Campus Cordon</option>
+              <option value="3">T3 · Digital Forensics & Ciphers</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>PLAYER NAMES · 1 TO 4 PLAYERS</label>
+            <div class="member-fields">
+              <input name="member" required maxlength="36" placeholder="Player 1 · required">
+              <input name="member" maxlength="36" placeholder="Player 2 · optional">
+              <input name="member" maxlength="36" placeholder="Player 3 · optional">
+              <input name="member" maxlength="36" placeholder="Player 4 · optional">
+            </div>
+          </div>
+          <div id="reg-error" class="device-note portal-hidden"></div>
+          <button class="btn btn-primary" type="submit">Register this team</button>
+        </form>
+        <div id="pin-receipt" class="device-note portal-hidden" style="margin-top:14px">
+          <strong>Save your team PIN.</strong> It is shown once on this device.
+          <div style="margin-top:7px"><span id="issued-team-name"></span> · PIN <b id="issued-team-pin" style="font:600 16px var(--mono);color:var(--cyan)"></b></div>
+        </div>
+      </section>
+
+      <section class="portal-card" id="login-card">
+        <div class="eyebrow">RETURNING TEAM</div>
+        <h2>Team login</h2>
+        <p>Sign in on the device used to register your team.</p>
+        <form id="login-form">
+          <div class="field">
+            <label for="login-team-name">TEAM NAME</label>
+            <input id="login-team-name" required placeholder="Registered team name">
+          </div>
+          <div class="field">
+            <label for="login-pin">8-DIGIT TEAM PIN</label>
+            <input id="login-pin" required inputmode="numeric" pattern="[0-9]{8}" maxlength="8" placeholder="Enter 8 digits">
+          </div>
+          <div id="login-error" class="device-note portal-hidden"></div>
+          <button class="btn btn-quiet" type="submit">Sign in to your team</button>
+        </form>
+        <div class="device-note" style="margin-top:18px">
+          <strong>One team, one device.</strong> Keep this device assigned to your team and save the PIN securely.
+        </div>
+      </section>
+    </div>
+
+    <section id="team-dashboard" class="portal-main portal-hidden">
+      <div class="portal-welcome">
+        <div>
+          <div class="eyebrow">TEAM DASHBOARD</div>
+          <h1 id="welcome-name" style="font-size:24px;margin:8px 0 7px"></h1>
+          <div id="welcome-track"></div>
+          <p id="team-progress-text" style="color:var(--muted);font-size:12px"></p>
+        </div>
+        <div style="text-align:right">
+          <div class="eyebrow">YOUR SCORE</div>
+          <div class="portal-score" id="team-score">0</div>
+          <div class="team-meta">POINTS · LIVE TOTAL</div>
+        </div>
+      </div>
+
+      <div id="team-pin-issued" class="device-note portal-hidden" style="margin:12px 0">
+        <strong>Save your team PIN.</strong> <span id="team-pin-value"></span>
+        <button class="text-btn" id="hide-pin">Dismiss</button>
+      </div>
+
+      <div class="stat-grid" style="margin:16px 0">
+        <article class="stat-card"><span>TEAM STATUS</span><b id="team-status" style="font:600 13px var(--sans);margin-top:17px">SETUP</b></article>
+        <article class="stat-card"><span>HINTS USED</span><b id="team-hints" style="font:500 12px var(--sans);margin-top:19px">0 hints · 0 points</b></article>
+      </div>
+
+      <section class="panel portal-team-card">
+        <div class="panel-head">
+          <div><h3>Track progress</h3><p>Complete the seven levels in order.</p></div>
+          <span class="status-chip registered" id="team-current">Level 1 · Clue 1</span>
+        </div>
+        <div style="padding:0 17px 16px">
+          <div class="level-list" id="team-levels"></div>
+          <div id="team-start-event-note" class="device-note">The organiser has not started the event yet.</div>
+          <div class="action-row">
+            <a class="btn btn-primary" id="team-open-clue" href="#">Open current clue</a>
+            <button class="btn btn-quiet" id="team-hint">Request a hint · half the level points</button>
+            <button class="btn btn-quiet" id="team-logout">Sign out</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <section class="panel">
+          <div class="panel-head"><div><h3>Score breakdown</h3><p>Level points and hint deductions</p></div></div>
+          <div id="team-score-breakdown" class="ledger-list"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><div><h3>Team activity</h3><p>Recent progress and score changes</p></div></div>
+          <div id="team-log" class="activity-list"></div>
+        </section>
+      </div>
+
+      <div class="device-note" style="margin-top:15px">Your team can see its own registration and progress. The organiser can see every team.</div>
+    </section>
+
+    <div class="portal-footer"><span>NFSU JAIPUR · TREASURE HUNT</span><span>Team Portal · Up to four players</span></div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="hunt.js"></script>
+</body>
+</html>

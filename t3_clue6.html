@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFSU Jaipur - T3 Clue 6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      background-color: #0d0c03;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-client.js"></script><script src="hunt.js"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start p-4 sm:p-6 text-slate-100">
+
+  <!-- Header -->
+  <header class="w-full max-w-3xl text-center py-6 border-b border-amber-950 mb-6">
+    <div class="inline-block px-3 py-1 bg-amber-950 text-amber-400 border border-amber-800 text-xs rounded tracking-widest uppercase mb-2">
+      National Forensic Sciences University • Jaipur Campus
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-wider text-amber-400 uppercase">
+      T3 • CLUE 6 OF 7
+    </h1>
+    <p class="text-xs text-amber-200/80 mt-1 font-mono">
+      Track 3: Digital Forensics & Ciphers (Yellow Protocol)
+    </p>
+    <p class="text-xs text-amber-400 mt-2 font-mono">
+      <i class="fa-solid fa-lock mr-1"></i> Strict Forward-Only System: Backward navigation is restricted.
+    </p>
+  </header>
+
+  <!-- Riddle Dossier Container -->
+  <main id="dossier-box" class="w-full max-w-3xl">
+    <div class="bg-slate-950/90 border border-amber-500/70 rounded-xl p-5 sm:p-6 shadow-2xl">
+      
+      <!-- Stage & Concept -->
+      <div class="border-b border-amber-950 pb-3 mb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono text-amber-400 uppercase tracking-wider">
+            T3 • Clue 6 (Hard)
+          </span>
+          <h2 class="text-base sm:text-lg font-bold text-slate-100 mt-0.5">Steganography & LSB (Least Significant Bit)</h2>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded bg-black/60 border border-amber-950 font-mono text-amber-400">
+          Clue 6/7
+        </span>
+      </div>
+
+      <!-- Main Riddle (Location Hidden) -->
+      <div class="bg-black/40 p-4 rounded-lg border-l-4 border-amber-500 mb-5">
+        <p class="text-xs text-amber-400 uppercase font-semibold mb-1">Riddle Card:</p>
+        <p class="text-sm italic text-slate-200 leading-relaxed">
+          "High on the Fourth Floor pinned in place, visual history conceals a trace. The lowest bit of red and blue, carries the hidden byte to you."
+        </p>
+      </div>
+
+      <!-- Forensic Puzzle -->
+      <div class="mb-6">
+        <h3 class="text-xs uppercase font-semibold text-amber-200 mb-1">Forensic Puzzle:</h3>
+        <p class="text-sm text-slate-300 leading-relaxed">8 consecutive pixel color values (Red channel): 11010010, 11010011, 11010010, 11010010, 11010011, 11010011, 11010010, 11010011. Extract the LSB (last bit) of each byte in sequence: [0, 1, 0, 0, 1, 1, 0, 1]. Convert byte 01001101 to ASCII character.</p>
+      </div>
+
+      <!-- Verification Input -->
+      <div class="border-t border-amber-950 pt-5">
+        <label for="answer-input" class="block text-xs uppercase text-amber-200 mb-2 font-semibold">
+          Enter Forensic Key / Solution:
+        </label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input type="text" id="answer-input" placeholder="Type verified key..." class="flex-1 border border-amber-800 focus:border-amber-400 text-amber-100 placeholder-amber-400/40 bg-amber-950/40 px-4 py-2.5 rounded-lg text-sm focus:outline-none" />
+          <button onclick="verifyKey()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/30 font-bold px-6 py-2.5 rounded-lg text-sm transition">
+            Verify Key
+          </button>
+        </div>
+        <p id="feedback-msg" class="text-xs mt-2 font-mono h-4"></p>
+      </div>
+
+      <!-- Forward-Only Navigation Control -->
+      <div class="mt-6 pt-4 border-t border-amber-950 flex justify-end">
+        <button id="forward-btn" onclick="goForward()" disabled class="bg-slate-900 text-slate-600 font-bold px-6 py-2.5 rounded-lg text-sm transition cursor-not-allowed">
+          Open the next clue →
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Clearance Screen (Triggered if final clue of track) -->
+  <main id="clearance-screen" class="w-full max-w-3xl hidden">
+    <div class="bg-slate-950/90 border border-amber-500 rounded-xl p-8 text-center shadow-2xl">
+      <span class="px-3 py-1 text-xs font-bold rounded uppercase tracking-widest bg-amber-950 text-amber-400 border border-amber-800">
+        YELLOW SECTOR CLEARED
+      </span>
+      <h2 class="text-2xl font-black text-slate-100 mt-4 uppercase tracking-wider">All 7 Clues Completed</h2>
+      <p class="text-xs text-slate-300 mt-2 max-w-lg mx-auto leading-relaxed">
+        Your squad has cleared all 7 investigative clues for T3. Retain your verified discipline token below for Grand Finale convergence:
+      </p>
+      <div class="mt-6 p-4 rounded-lg bg-black/60 border border-amber-500 inline-block text-left">
+        <div class="text-xs uppercase text-amber-400 font-semibold mb-1">Authenticated Track Token:</div>
+        <div class="text-lg font-mono font-bold text-amber-400">TA3 Digital Token: SHA-256</div>
+      </div>
+      <div class="mt-8">
+        <a href="finale_orange.html" class="inline-block bg-orange-600 hover:bg-orange-500 text-slate-950 font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-wider transition shadow-lg shadow-orange-600/30">
+          Proceed to Grand Finale Portal &rarr;
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const NEXT_URL = "t3_clue7.html";
+    const IS_LAST = false;
+    let isVerified = false;
+    window.NFSUHunt?.openClue(3, 6);
+
+    // Trap back button
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, null, window.location.href);
+      alert("Notice: Back navigation is prohibited in this forensic challenge.");
+    });
+
+    async function verifyKey() {
+      const input = document.getElementById('answer-input').value.trim().toUpperCase();
+      const fb = document.getElementById('feedback-msg');
+      const fwd = document.getElementById('forward-btn');
+
+      if (!input) {
+        fb.className = "text-xs mt-2 font-mono text-amber-400";
+        fb.innerText = "Please enter solution key.";
+        return;
+      }
+
+      let accepted = false;
+      try { accepted = await window.NFSUHunt?.submitAnswer(3, 6, input); } catch (err) { fb.className = 'text-xs mt-2 font-mono text-rose-400'; fb.innerText = err.message || 'Could not verify answer.'; return; }
+      if (accepted) {
+        isVerified = true;
+        fb.className = "text-xs mt-2 font-mono text-emerald-400";
+        fb.innerText = "✓ Correct. The next clue is unlocked.";
+        document.getElementById('answer-input').disabled = true;
+
+        fwd.disabled = false;
+        fwd.className = "bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/30 font-bold px-6 py-2.5 rounded-lg text-sm transition cursor-pointer";
+      } else {
+        fb.className = "text-xs mt-2 font-mono text-rose-400";
+        fb.innerText = "✗ Not quite. Check your answer and try again.";
+      }
+    }
+
+    function goForward() {
+      if (!isVerified) return;
+      if (IS_LAST) {
+        document.getElementById('dossier-box').classList.add('hidden');
+        document.getElementById('clearance-screen').classList.remove('hidden');
+      } else {
+        window.location.href = NEXT_URL;
+      }
+    }
+  </script>
+</body>
+</html>

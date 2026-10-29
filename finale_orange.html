@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFSU Jaipur - Grand Finale (Orange Sector)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      background-color: #0d0702;
+      color: #fed7aa;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start p-4 sm:p-6">
+
+  <header class="w-full max-w-3xl text-center py-6 border-b border-orange-900/60 mb-6">
+    <div class="inline-block px-3 py-1 bg-orange-950 text-orange-400 text-xs rounded border border-orange-800 tracking-widest uppercase mb-2">
+      National Forensic Sciences University • Jaipur Campus
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-wider text-orange-500 uppercase">
+      Grand Finale • Orange Sector
+    </h1>
+    <p class="text-xs text-orange-200/80 mt-2 font-mono">
+      Track T6 • Convergent Case Closure (2 Riddle Phases)
+    </p>
+    <p class="text-xs text-amber-400 mt-1 font-mono">
+      <i class="fa-solid fa-lock mr-1"></i> Strict Forward-Only System Active: Back-tracking is prohibited.
+    </p>
+  </header>
+
+  <main id="portal-container" class="w-full max-w-3xl">
+    <div class="flex items-center justify-between border-b border-orange-950 pb-3 mb-5">
+      <div>
+        <span class="px-2.5 py-1 rounded bg-orange-950 text-orange-400 font-bold text-xs uppercase border border-orange-800">
+          ORANGE PROTOCOL
+        </span>
+        <h2 class="text-base font-bold text-orange-100 mt-1">Convergent Case Closure</h2>
+      </div>
+      <div id="counter-text" class="text-xs text-orange-400 font-mono">Phase 1 of 2</div>
+    </div>
+
+    <div class="bg-slate-950/80 border border-orange-800/60 rounded-xl p-5 sm:p-6 shadow-2xl">
+      <div class="border-b border-orange-950 pb-3 mb-4 flex items-center justify-between">
+        <div>
+          <span id="clue-tag" class="text-xs font-mono text-orange-400 uppercase tracking-wider">Grand Finale • Phase 1</span>
+          <h3 id="clue-concept" class="text-base font-bold text-orange-100 mt-0.5">Multi-Disciplinary Evidence Cache Convergence</h3>
+        </div>
+      </div>
+
+      <div class="bg-orange-950/30 p-4 rounded-lg border-l-4 border-orange-500 mb-5">
+        <p class="text-xs text-orange-400 uppercase font-semibold mb-1">Riddle Card:</p>
+        <p id="riddle-text" class="text-sm italic text-orange-100 leading-relaxed">
+          "Three investigative tracks unite where physical marks, cordons, and digital signatures cross. Affixed beneath the table is a tri-lock master puzzle box requiring all 3 codes to release the master coordinates map."
+        </p>
+      </div>
+
+      <div class="mb-6">
+        <h4 class="text-xs uppercase font-semibold text-orange-300 mb-1">Forensic Puzzle:</h4>
+        <p id="puzzle-text" class="text-sm text-orange-200/90 leading-relaxed">
+          Enter the unified 3-discipline solution key combining the Physical Evidence Token, Physical Scene Token, and Digital Hash Token separated by hyphens (e.g. 6-R-9MM-30-DEGREE-SHA-256).
+        </p>
+      </div>
+
+      <div class="border-t border-orange-950 pt-5">
+        <label for="answer-input" class="block text-xs uppercase text-orange-300 mb-2 font-semibold">Enter Forensic Solution Key:</label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input type="text" id="answer-input" placeholder="Enter key..." class="flex-1 bg-orange-950/40 border border-orange-800 px-4 py-2.5 rounded-lg text-sm text-orange-100 placeholder-orange-400/40 focus:outline-none focus:border-orange-500" />
+          <button onclick="verifyKey()" class="bg-orange-600 hover:bg-orange-500 text-slate-950 font-bold px-6 py-2.5 rounded-lg text-sm transition">
+            Verify Key
+          </button>
+        </div>
+        <p id="feedback-msg" class="text-xs mt-2 font-mono h-4"></p>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-orange-950 flex justify-end">
+        <button id="forward-btn" onclick="nextStage()" disabled class="bg-slate-900 text-slate-600 font-bold px-6 py-2.5 rounded-lg text-sm transition cursor-not-allowed">
+          Forward to Final Phase &rarr;
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <main id="completed-screen" class="w-full max-w-3xl hidden">
+    <div class="bg-orange-950/40 border border-orange-500 rounded-xl p-8 text-center shadow-2xl">
+      <span class="px-3 py-1 text-xs font-bold rounded uppercase tracking-widest bg-orange-950 text-orange-400 border border-orange-600">
+        ORANGE PROTOCOL CONCLUDED
+      </span>
+      <h2 class="text-2xl font-black text-orange-100 mt-4 uppercase tracking-wider">Case Brief Verified & Sealed</h2>
+      <p class="text-xs text-orange-200 mt-2 max-w-lg mx-auto leading-relaxed">
+        Congratulations! All 3 forensic disciplines and both Grand Finale phases have been authenticated.
+      </p>
+      <div class="mt-6 p-4 rounded-lg bg-black/60 border border-orange-500 inline-block text-left">
+        <div class="text-xs uppercase text-orange-400 font-semibold mb-1">Final Apprehension Clearance:</div>
+        <div class="text-lg font-mono font-bold text-orange-400">VERIFIED CONVICTION - CASE SOLVED</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const clues = [
+      {
+        tag: "Grand Finale • Phase 1",
+        concept: "Multi-Disciplinary Evidence Cache Convergence",
+        riddle: "Three investigative tracks unite where physical marks, cordons, and digital signatures cross. Affixed beneath the table is a tri-lock master puzzle box requiring all 3 codes to release the master coordinates map.",
+        puzzle: "Enter the unified 3-discipline solution key combining the Physical Evidence Token, Physical Scene Token, and Digital Hash Token separated by hyphens (e.g. 6-R-9MM-30-DEGREE-SHA-256).",
+        solution: "6-R-9MM-30-DEGREE-SHA-256"
+      },
+      {
+        tag: "Grand Finale • Phase 2",
+        concept: "Master Case File Recovery & Apprehension",
+        riddle: "Where foundations are poured and scaffolds stand tall, the final perpetrator drops the master wall. Combine physical blood typing, surveillance sightline, and decrypt the master hash to seal the conviction before the siren sounds.",
+        puzzle: "Submit the final Case Brief Dossier victory confirmation phrase: 'VERIFIED CONVICTION'.",
+        solution: "VERIFIED CONVICTION"
+      }
+    ];
+
+    let currentIndex = 0;
+    let isVerified = false;
+
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, null, window.location.href);
+      alert("Notice: Back-tracking is prohibited in this forensic challenge.");
+    });
+
+    function loadRiddle(idx) {
+      currentIndex = idx;
+      isVerified = false;
+
+      const item = clues[idx];
+      document.getElementById('clue-tag').innerText = item.tag;
+      document.getElementById('clue-concept').innerText = item.concept;
+      document.getElementById('riddle-text').innerText = `"${item.riddle}"`;
+      document.getElementById('puzzle-text').innerText = item.puzzle;
+
+      const input = document.getElementById('answer-input');
+      input.value = '';
+      input.disabled = false;
+      document.getElementById('feedback-msg').innerText = '';
+
+      const fwd = document.getElementById('forward-btn');
+      fwd.disabled = true;
+      fwd.innerText = idx === 0 ? "Forward to Final Phase →" : "Seal Master Conviction →";
+      fwd.className = "bg-slate-900 text-slate-600 font-bold px-6 py-2.5 rounded-lg text-sm transition cursor-not-allowed";
+
+      document.getElementById('counter-text').innerText = `Phase ${idx + 1} of 2`;
+    }
+
+    function verifyKey() {
+      const input = document.getElementById('answer-input').value.trim().toUpperCase();
+      const target = clues[currentIndex].solution.toUpperCase();
+      const fb = document.getElementById('feedback-msg');
+      const fwd = document.getElementById('forward-btn');
+
+      if (!input) {
+        fb.className = "text-xs mt-2 font-mono text-amber-400";
+        fb.innerText = "Please enter solution key.";
+        return;
+      }
+
+      if (input.includes(target) || target.includes(input)) {
+        isVerified = true;
+        fb.className = "text-xs mt-2 font-mono text-emerald-400";
+        fb.innerText = "✓ Correct. The next clue is unlocked.";
+        document.getElementById('answer-input').disabled = true;
+
+        fwd.disabled = false;
+        fwd.className = "bg-orange-500 hover:bg-orange-400 text-slate-950 font-bold px-6 py-2.5 rounded-lg text-sm transition cursor-pointer shadow-lg shadow-orange-500/30";
+      } else {
+        fb.className = "text-xs mt-2 font-mono text-rose-400";
+        fb.innerText = "✗ Not quite. Check your answer and try again.";
+      }
+    }
+
+    function nextStage() {
+      if (!isVerified) return;
+
+      if (currentIndex < clues.length - 1) {
+        loadRiddle(currentIndex + 1);
+      } else {
+        document.getElementById('portal-container').classList.add('hidden');
+        document.getElementById('completed-screen').classList.remove('hidden');
+      }
+    }
+
+    loadRiddle(0);
+  </script>
+</body>
+</html>
